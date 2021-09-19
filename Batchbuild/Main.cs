@@ -34,7 +34,7 @@ namespace Batchbuild
     [BepInProcess("valheim.exe")]
     public class Plugin : BaseUnityPlugin
     {
-        private Harmony _Harmony;
+        public static Harmony harmony = new Harmony("mod.batchbuild");
         private static readonly GUIStyle styleTooltip = new GUIStyle();
         private static Texture2D texture = new Texture2D(1, 1);
 
@@ -42,7 +42,7 @@ namespace Batchbuild
         public static ConfigEntry<KeyboardShortcut> configShowGUI;
         public static ConfigEntry<string> configCommand;
 
-        public const string Version = "0.1.0";
+        public const string Version = "0.2.0";
         public const string ModName = "Batch build";
         public static ManualLogSource Log;
 
@@ -71,8 +71,8 @@ namespace Batchbuild
         {
             string defaultConfigSection = "General";
             Log = Logger;
-            
-            _Harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
+
+            harmony.PatchAll();
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             texture = new Texture2D(1, 1);
@@ -136,7 +136,7 @@ namespace Batchbuild
 
         public void OnDestroy()
         {
-            if (_Harmony != null) _Harmony.UnpatchSelf();
+            harmony.UnpatchSelf();
         }
 
         public static string InterpolateString(string text)

@@ -7,10 +7,10 @@ using System.Linq;
 
 namespace Batchbuild
 {
-    [HarmonyPatch(typeof(Console), "InputText")]
+    [HarmonyPatch(typeof(Terminal), "InputText")]
     class InputText_Patch
     {
-        static bool Prefix(Console __instance)
+        static bool Prefix(Terminal __instance)
         {
             string command = Plugin.configCommand.Value;
             string commandLine = __instance.m_input.text;
@@ -21,7 +21,7 @@ namespace Batchbuild
             {
                 Plugin.Log.LogInfo(command + " id [pos_x pos_y pos_z [angle_x angle_y angle_z [point_x point_y point_z axis_x axis_y axis_z angle]]]");
 
-                return true;
+                return false;
             }
 
             if (!commandLine.StartsWith(command + " "))
