@@ -107,15 +107,16 @@ if $(ConfigurationName) == Debug_plugins_dir set DEST_DIR=plugins
 if $(ConfigurationName) == Debug set DEST_DIR=scripts
 
 if not $(ConfigurationName) == Release (
-    del "D:\valheim_debug\Bepinex\plugins\$(TargetName).*"
-    del "D:\valheim_debug\Bepinex\scripts\$(TargetName).*"
+    del "A:\valheim_debug\BepInEx\plugins\$(TargetName).*"
+    del "A:\valheim_debug\BepInEx\scripts\$(TargetName).*"
     $(SolutionDir)pdb2mdb.exe "$(TargetPath)"
-    xcopy "$(TargetDir)\$(TargetFileName).mdb" "D:\valheim_debug\Bepinex\%25DEST_DIR%25\" /q /y /i
-    xcopy "$(TargetDir)\$(TargetName).pdb" "D:\valheim_debug\Bepinex\%25DEST_DIR%25\" /q /y /i
+    xcopy "$(TargetDir)\$(TargetFileName).mdb" "A:\valheim_debug\BepInEx\%25DEST_DIR%25\" /q /y /i
+    xcopy "$(TargetDir)\$(TargetName).pdb" "A:\valheim_debug\BepInEx\%25DEST_DIR%25\" /q /y /i
 )
-xcopy "$(TargetDir)\$(TargetFileName)" "D:\valheim_debug\Bepinex\%25DEST_DIR%25\" /q /y /i
+xcopy "$(TargetDir)\$(TargetFileName)" "A:\valheim_debug\BepInEx\%25DEST_DIR%25\" /q /y /i
 
-echo DEST_DIR = %25DEST_DIR%25</PostBuildEvent>
+echo DEST_DIR = %25DEST_DIR%25
+</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
