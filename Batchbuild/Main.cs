@@ -522,6 +522,19 @@ namespace Batchbuild
                     angle);
             }
 
+            // scale
+            /*
+             * https://forums.nexusmods.com/index.php?showtopic=10501073/#entry99434368
+             */
+            if (args.Length >= 17)
+            {
+                float scale_x = Parse(args[14]);
+                float scale_y = Parse(args[15]);
+                float scale_z = Parse(args[16]);
+
+                prefab.transform.localScale = new Vector3(scale_x, scale_y, scale_z);
+            }
+
             Log.LogDebug("Instantiate \"" + prefab.name + "\" " +
                 prefab.transform.position.ToString() + " " +
                 prefab.transform.rotation.ToString());

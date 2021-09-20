@@ -19,7 +19,7 @@ namespace Batchbuild
                 commandLine.Equals(command + " -?") ||
                 commandLine.Equals(command + " /?"))
             {
-                Plugin.Log.LogInfo(command + " id [pos_x pos_y pos_z [angle_x angle_y angle_z [point_x point_y point_z axis_x axis_y axis_z angle]]]");
+                Plugin.Log.LogInfo(command + " id [pos_x pos_y pos_z [angle_x angle_y angle_z [point_x point_y point_z axis_x axis_y axis_z angle [scale_x scale_y scale_z]]]]");
 
                 return false;
             }
