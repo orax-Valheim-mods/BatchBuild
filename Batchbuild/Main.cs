@@ -42,7 +42,7 @@ namespace Batchbuild
         public static ConfigEntry<KeyboardShortcut> configShowGUI;
         public static ConfigEntry<string> configCommand;
 
-        public const string Version = "0.2.0";
+        public const string Version = "0.2.0.1";
         public const string ModName = "Batch build";
         public static ManualLogSource Log;
 
@@ -572,12 +572,7 @@ namespace Batchbuild
 
             if (Physics.Raycast(ray, out RaycastHit raycastHit, 500f, layerMask))
             {
-                Transform transform = raycastHit.collider.transform;
-
-                while (transform.root != transform.parent)
-                {
-                    transform = transform.parent;
-                }
+                Transform transform = raycastHit.collider.transform.root;
 
                 gameObject = transform.gameObject;
             }
