@@ -16,17 +16,19 @@
  */
 
 using BepInEx;
-using BepInEx.Logging;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
-using UnityEngine;
-using xFunc.Maths.Results;
 using System;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Globalization;
 using System.Text.RegularExpressions;
-using System.IO;
+using UnityEngine;
+using UnityEngine.Diagnostics;
+using xFunc.Maths.Results;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Batchbuild
 {
@@ -42,7 +44,7 @@ namespace Batchbuild
         public static ConfigEntry<KeyboardShortcut> configShowGUI;
         public static ConfigEntry<string> configCommand;
 
-        public const string Version = "0.2.0.1";
+        public const string Version = "0.2.0.2";
         public const string ModName = "Batch build";
         public static ManualLogSource Log;
 
@@ -120,7 +122,8 @@ namespace Batchbuild
                 ZNetView view = target.GetComponent<ZNetView>();
                 if (view)
                 {
-                    prefabName = view.GetPrefabName();
+                    //prefabName = view.GetPrefabName();
+                    prefabName=Utils.GetPrefabName(target);
                 }
 
                 string infoPosition =
@@ -171,7 +174,9 @@ namespace Batchbuild
             ZNetView view = gameObjectData.gameObject.GetComponent<ZNetView>();
             if (view)
             {
-                gameObjectData.prefabName = view.GetPrefabName();
+                //gameObjectData.prefabName = view.GetPrefabName();
+                gameObjectData.prefabName = Utils.GetPrefabName(gameObjectData.gameObject);
+
             }
 
             // position
@@ -451,6 +456,8 @@ namespace Batchbuild
             GameObject prefab;
             string prefabID = args[0];
             float pos_x, pos_y, pos_z;
+            Vector3 originalScale;
+            bool scaleChanged = false;
 
             prefab = ZNetScene.instance.GetPrefab(prefabID);
             if (!prefab)
@@ -466,6 +473,8 @@ namespace Batchbuild
 
                 return;
             }
+
+            originalScale = prefab.transform.localScale;
 
             // position
             if (args.Length < 4)
@@ -533,12 +542,19 @@ namespace Batchbuild
                 float scale_z = Parse(args[16]);
 
                 prefab.transform.localScale = new Vector3(scale_x, scale_y, scale_z);
+                scaleChanged = true;
             }
 
             Log.LogDebug("Instantiate \"" + prefab.name + "\" " +
                 prefab.transform.position.ToString() + " " +
                 prefab.transform.rotation.ToString());
             GameObject gameObject = UnityEngine.Object.Instantiate(prefab);
+
+            // restaure échelle originale
+            if (scaleChanged)
+            {
+                prefab.transform.localScale = originalScale;
+            }
 
             Piece component = gameObject.GetComponent<Piece>();
             if ((bool)component)
