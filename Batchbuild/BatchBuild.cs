@@ -20,7 +20,6 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using UnityEngine;
-using xFunc.Maths.Results;
 
 namespace Batchbuild
 {
@@ -420,7 +419,7 @@ namespace Batchbuild
             }
             else
             {
-                return Convert.ToSingle(Lib.processor.Solve<NumberResult>(s).Result);
+                return Lib.Evaluate(s);
             }
         }
 
