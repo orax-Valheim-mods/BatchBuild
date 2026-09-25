@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 using System;
-using System.Text.RegularExpressions;
 using System.IO;
-using UnityEngine;
 using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Batchbuild
 {
@@ -30,8 +30,8 @@ namespace Batchbuild
             }
 
             Vector3 offset = Vector3.zero;
-            commandLine = Regex.Replace(commandLine, command + @"\s+", ""); // supprime le début de la commande
-            commandLine = Regex.Replace(commandLine, @"\s*#.*", ""); // supprime les commentaires
+            commandLine = Regex.Replace(commandLine, command + @"\s+", ""); // Removes the command prefix.
+            commandLine = Regex.Replace(commandLine, @"\s*#.*", ""); // Removes comments.
 
             char[] charSeparators = new char[] { ' ' };
 
@@ -44,8 +44,6 @@ namespace Batchbuild
 
                 string text = File.ReadAllText(filePath);
 
-                //text = Regex.Replace(text, @"^\s*(?:\r\n|\r|n)?", "", RegexOptions.Multiline); // supprime les lignes vides
-
                 string[] lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                 for (int i = 0; i < lines.Length; i++)
@@ -54,7 +52,7 @@ namespace Batchbuild
 
                     Plugin.Log.LogDebug("Line #" + (i + 1) + "/" + lines.Length + " \"" + line + "\"");
 
-                    line = Regex.Replace(line, @"\s*#.*", ""); // supprime les commentaires
+                    line = Regex.Replace(line, @"\s*#.*", ""); // Removes comments.
                     if (line == "")
                     {
                         continue;
@@ -84,8 +82,7 @@ namespace Batchbuild
                         continue;
                     }
 
-                    // récupère les colonnes
-                    //string[] columns = line.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+                    // Gets the columns.
                     // https://stackoverflow.com/a/14655145
                     string[] columns = Regex.Matches(line, @"[\""].+?[\""]|[^ ]+")
                         .Cast<Match>()
@@ -101,8 +98,7 @@ namespace Batchbuild
             else
             {
                 commandLine = Plugin.InterpolateString(commandLine);
-                // récupère les colonnes
-                //string[] columns = line.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+                // Gets the columns.
                 // https://stackoverflow.com/a/14655145
                 string[] columns = Regex.Matches(commandLine, @"[\""].+?[\""]|[^ ]+")
                     .Cast<Match>()

@@ -1,36 +1,35 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
-// Les informations générales relatives à un assembly dépendent de
-// l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
-// associées à un assembly.
-[assembly: AssemblyTitle("Batchbuild")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("BatchBuild")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Batchbuild")]
+[assembly: AssemblyProduct("BatchBuild")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly
-// aux composants COM. Si vous devez accéder à un type dans cet assembly à partir de
-// COM, affectez la valeur true à l'attribut ComVisible sur ce type.
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("98c8d82b-dc24-4477-a560-59b35f1ed530")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("e3243d22-4307-4008-ba36-9f326008cde5")]
 
-// Les informations de version pour un assembly se composent des quatre valeurs suivantes :
+// Version information for an assembly consists of the following four values:
 //
-//      Version principale
-//      Version secondaire
-//      Numéro de build
-//      Révision
+//      Major Version
+//      Minor Version
+//      Build Number
+//      Revision
 //
-// Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
-// en utilisant '*', comme indiqué ci-dessous :
+// You can specify all the values or you can default the Build and Revision Numbers
+// by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(Batchbuild.Plugin.Version)]
+[assembly: AssemblyFileVersion(Batchbuild.Plugin.Version)]

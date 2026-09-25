@@ -29,7 +29,6 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
-[Oo]ut/
 [Ll]og/
 [Ll]ogs/
 
@@ -361,3 +360,17 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# csproj.user file (for local environment)
+*.csproj.user
+
+# not the libraries folder
+!libraries/*
+.idea/
+
+# not the valheim path file
+Environment.props
+
+# not the generated files for thunderstore
+*/Package/plugins/*
+*/Package/README.md
