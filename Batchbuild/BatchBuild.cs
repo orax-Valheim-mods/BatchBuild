@@ -15,6 +15,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using Splatform;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -402,7 +403,7 @@ namespace Batchbuild
             Piece component = gameObject_new.GetComponent<Piece>();
             if ((bool)component)
             {
-                component.SetCreator(Player.m_localPlayer.GetPlayerID());
+                component.SetCreator(Player.m_localPlayer.GetPlayerID(), PlatformManager.DistributionPlatform.LocalUser.PlatformUserID);
             }
 
             RemoveObject(ref gameObject);
@@ -543,7 +544,7 @@ namespace Batchbuild
             Piece component = gameObject.GetComponent<Piece>();
             if ((bool)component)
             {
-                component.SetCreator(Player.m_localPlayer.GetPlayerID());
+                component.SetCreator(Player.m_localPlayer.GetPlayerID(), PlatformManager.DistributionPlatform.LocalUser.PlatformUserID);
             }
         }
 
