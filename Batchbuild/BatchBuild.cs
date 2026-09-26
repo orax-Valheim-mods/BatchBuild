@@ -23,18 +23,18 @@ using UnityEngine;
 
 namespace Batchbuild
 {
-    [BepInPlugin("orax.batchbuild", ModName, Version)]
+    [BepInPlugin("orax.BatchBuild", ModName, Version)]
     [BepInProcess("valheim.exe")]
     public class Plugin : BaseUnityPlugin
     {
-        public static Harmony harmony = new Harmony("mod.batchbuild");
+        public static Harmony harmony = new Harmony("orax.BatchBuild");
         private static readonly GUIStyle styleTooltip = new GUIStyle();
         private static Texture2D texture = new Texture2D(1, 1);
 
         public static ConfigEntry<KeyboardShortcut> configShowGUI;
         public static ConfigEntry<string> configCommand;
 
-        public const string Version = "0.2.0.2";
+        public const string Version = "0.2.2";
         public const string ModName = "Batch build";
         public static ManualLogSource Log;
 
