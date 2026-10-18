@@ -2,7 +2,7 @@
  * x = EAST/WEST
  * y = altitude
  * z = NORTH/SOUTH
- * 
+ *
  * id pos_x pos_y pos_z angle_x angle_y angle_z point_x point_y point_z axis_x axis_y axis_z angle
  * coords build
  * build helper
@@ -11,14 +11,14 @@
  * Player.RemovePiece()
  */
 
+using System;
+using System.Globalization;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using Splatform;
-using System;
-using System.Globalization;
-using System.Reflection;
 using UnityEngine;
 
 namespace Batchbuild
@@ -74,7 +74,11 @@ namespace Batchbuild
             styleTooltip.normal.textColor = Color.white;
             styleTooltip.normal.background = texture;
 
-            configShowGUI = Config.Bind<KeyboardShortcut>(defaultConfigSection, "Show GUI", new KeyboardShortcut(KeyCode.F3));
+            configShowGUI = Config.Bind<KeyboardShortcut>(
+                defaultConfigSection,
+                "Show GUI",
+                new KeyboardShortcut(KeyCode.F3)
+            );
             configCommand = Config.Bind<string>(defaultConfigSection, "Command", "build");
         }
 
@@ -100,7 +104,10 @@ namespace Batchbuild
             {
                 if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
                 {
-                    UpdateGameObjectPosition(ref targetGameObjectData.gameObject, ref targetGameObjectData);
+                    UpdateGameObjectPosition(
+                        ref targetGameObjectData.gameObject,
+                        ref targetGameObjectData
+                    );
                 }
             }
 
@@ -115,10 +122,16 @@ namespace Batchbuild
                 }
 
                 string infoPosition =
-                    "x=" + target.transform.position.x.ToString(numberFormat) + " " +
-                    "y=" + target.transform.position.y.ToString(numberFormat) + " " +
-                    "z=" + target.transform.position.z.ToString(numberFormat) + " " +
-                    target.transform.rotation.eulerAngles.ToString(numberFormat);
+                    "x="
+                    + target.transform.position.x.ToString(numberFormat)
+                    + " "
+                    + "y="
+                    + target.transform.position.y.ToString(numberFormat)
+                    + " "
+                    + "z="
+                    + target.transform.position.z.ToString(numberFormat)
+                    + " "
+                    + target.transform.rotation.eulerAngles.ToString(numberFormat);
                 _ = GUILayout.TextField(prefabName + Environment.NewLine + infoPosition);
             }
 
@@ -132,7 +145,6 @@ namespace Batchbuild
 
         public static string InterpolateString(string text)
         {
-
             text = text.Replace("{x}", Player.m_localPlayer.transform.position.x.ToString());
             text = text.Replace("{y}", Player.m_localPlayer.transform.position.y.ToString());
             text = text.Replace("{z}", Player.m_localPlayer.transform.position.z.ToString());
@@ -140,7 +152,10 @@ namespace Batchbuild
             return text;
         }
 
-        public static void UpdateData(ref GameObjectData gameObjectData, GameObject newGameObject = null)
+        public static void UpdateData(
+            ref GameObjectData gameObjectData,
+            GameObject newGameObject = null
+        )
         {
             if (gameObjectData.gameObject == null && newGameObject == null)
             {
@@ -163,13 +178,18 @@ namespace Batchbuild
             if (view)
             {
                 gameObjectData.prefabName = Utils.GetPrefabName(gameObjectData.gameObject);
-
             }
 
             // Position.
-            gameObjectData.x = gameObjectData.gameObject.transform.position.x.ToString(numberFormat);
-            gameObjectData.y = gameObjectData.gameObject.transform.position.y.ToString(numberFormat);
-            gameObjectData.z = gameObjectData.gameObject.transform.position.z.ToString(numberFormat);
+            gameObjectData.x = gameObjectData.gameObject.transform.position.x.ToString(
+                numberFormat
+            );
+            gameObjectData.y = gameObjectData.gameObject.transform.position.y.ToString(
+                numberFormat
+            );
+            gameObjectData.z = gameObjectData.gameObject.transform.position.z.ToString(
+                numberFormat
+            );
 
             // Rotation angles.
             Vector3 angles = gameObjectData.gameObject.transform.localRotation.eulerAngles;
@@ -188,7 +208,12 @@ namespace Batchbuild
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Player position");
-            if (GUILayout.Button(new GUIContent("X", "Close this window."), GUILayout.ExpandWidth(false)))
+            if (
+                GUILayout.Button(
+                    new GUIContent("X", "Close this window."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
                 show = false;
 
@@ -198,11 +223,23 @@ namespace Batchbuild
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("x", GUILayout.ExpandWidth(false));
-            GUILayout.TextField(Player.m_localPlayer.transform.position.x.ToString(numberFormat), maxLength, GUILayout.Width(70));
+            GUILayout.TextField(
+                Player.m_localPlayer.transform.position.x.ToString(numberFormat),
+                maxLength,
+                GUILayout.Width(70)
+            );
             GUILayout.Label("y", GUILayout.ExpandWidth(false));
-            GUILayout.TextField(Player.m_localPlayer.transform.position.y.ToString(numberFormat), maxLength, GUILayout.Width(70));
+            GUILayout.TextField(
+                Player.m_localPlayer.transform.position.y.ToString(numberFormat),
+                maxLength,
+                GUILayout.Width(70)
+            );
             GUILayout.Label("z", GUILayout.ExpandWidth(false));
-            GUILayout.TextField(Player.m_localPlayer.transform.position.z.ToString(numberFormat), maxLength, GUILayout.Width(70));
+            GUILayout.TextField(
+                Player.m_localPlayer.transform.position.z.ToString(numberFormat),
+                maxLength,
+                GUILayout.Width(70)
+            );
             GUILayout.EndHorizontal();
 
             GUILayout.Label("Target");
@@ -225,30 +262,60 @@ namespace Batchbuild
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("x", GUILayout.ExpandWidth(false));
-            targetGameObjectData.x = GUILayout.TextField(targetGameObjectData.x, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.x = GUILayout.TextField(
+                targetGameObjectData.x,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.x = Math.Round(float.Parse(targetGameObjectData.x)).ToString(numberFormat);
+                targetGameObjectData.x = Math.Round(float.Parse(targetGameObjectData.x))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("y", GUILayout.ExpandWidth(false));
-            targetGameObjectData.y = GUILayout.TextField(targetGameObjectData.y, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.y = GUILayout.TextField(
+                targetGameObjectData.y,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.y = Math.Round(float.Parse(targetGameObjectData.y)).ToString(numberFormat);
+                targetGameObjectData.y = Math.Round(float.Parse(targetGameObjectData.y))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("z", GUILayout.ExpandWidth(false));
-            targetGameObjectData.z = GUILayout.TextField(targetGameObjectData.z, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.z = GUILayout.TextField(
+                targetGameObjectData.z,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.z = Math.Round(float.Parse(targetGameObjectData.z)).ToString(numberFormat);
+                targetGameObjectData.z = Math.Round(float.Parse(targetGameObjectData.z))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
@@ -259,36 +326,70 @@ namespace Batchbuild
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("x", GUILayout.ExpandWidth(false));
-            targetGameObjectData.angle_x = GUILayout.TextField(targetGameObjectData.angle_x, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.angle_x = GUILayout.TextField(
+                targetGameObjectData.angle_x,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.angle_x = Math.Round(float.Parse(targetGameObjectData.angle_x)).ToString(numberFormat);
+                targetGameObjectData.angle_x = Math.Round(float.Parse(targetGameObjectData.angle_x))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("y", GUILayout.ExpandWidth(false));
-            targetGameObjectData.angle_y = GUILayout.TextField(targetGameObjectData.angle_y, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.angle_y = GUILayout.TextField(
+                targetGameObjectData.angle_y,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.angle_y = Math.Round(float.Parse(targetGameObjectData.angle_y)).ToString(numberFormat);
+                targetGameObjectData.angle_y = Math.Round(float.Parse(targetGameObjectData.angle_y))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("z", GUILayout.ExpandWidth(false));
-            targetGameObjectData.angle_z = GUILayout.TextField(targetGameObjectData.angle_z, maxLength, GUILayout.Width(width));
-            if (GUILayout.Button(new GUIContent("R", "Rounds the value."), GUILayout.ExpandWidth(false)))
+            targetGameObjectData.angle_z = GUILayout.TextField(
+                targetGameObjectData.angle_z,
+                maxLength,
+                GUILayout.Width(width)
+            );
+            if (
+                GUILayout.Button(
+                    new GUIContent("R", "Rounds the value."),
+                    GUILayout.ExpandWidth(false)
+                )
+            )
             {
-                targetGameObjectData.angle_z = Math.Round(float.Parse(targetGameObjectData.angle_z)).ToString(numberFormat);
+                targetGameObjectData.angle_z = Math.Round(float.Parse(targetGameObjectData.angle_z))
+                    .ToString(numberFormat);
                 applyModifications = true;
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Apply", "Click or press Enter in a input box to apply.")))
+            if (
+                GUILayout.Button(
+                    new GUIContent("Apply", "Click or press Enter in a input box to apply.")
+                )
+            )
             {
                 applyModifications = true;
             }
@@ -341,7 +442,10 @@ namespace Batchbuild
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Undo"))
             {
-                UpdateGameObjectPosition(ref targetGameObjectData.gameObject, ref targetGameObjectOldData);
+                UpdateGameObjectPosition(
+                    ref targetGameObjectData.gameObject,
+                    ref targetGameObjectOldData
+                );
                 targetGameObjectData = targetGameObjectOldData;
                 applyModifications = false;
             }
@@ -352,7 +456,10 @@ namespace Batchbuild
 
             if (applyModifications)
             {
-                UpdateGameObjectPosition(ref targetGameObjectData.gameObject, ref targetGameObjectData);
+                UpdateGameObjectPosition(
+                    ref targetGameObjectData.gameObject,
+                    ref targetGameObjectData
+                );
             }
 
             GUILayout.Label(GUI.tooltip, styleTooltip);
@@ -387,7 +494,10 @@ namespace Batchbuild
             return path;
         }
 
-        public static bool UpdateGameObjectPosition(ref GameObject gameObject, ref GameObjectData gameObjectData)
+        public static bool UpdateGameObjectPosition(
+            ref GameObject gameObject,
+            ref GameObjectData gameObjectData
+        )
         {
             GameObject prefab = ZNetScene.instance.GetPrefab(gameObjectData.prefabName);
             if (!prefab)
@@ -402,7 +512,10 @@ namespace Batchbuild
             Piece component = gameObject_new.GetComponent<Piece>();
             if ((bool)component)
             {
-                component.SetCreator(Player.m_localPlayer.GetPlayerID(), PlatformManager.DistributionPlatform.LocalUser.PlatformUserID);
+                component.SetCreator(
+                    Player.m_localPlayer.GetPlayerID(),
+                    PlatformManager.DistributionPlatform.LocalUser.PlatformUserID
+                );
             }
 
             RemoveObject(ref gameObject);
@@ -423,7 +536,10 @@ namespace Batchbuild
             }
         }
 
-        public static void SetGameObjectPosition(ref GameObject gameObject, ref GameObjectData gameObjectData)
+        public static void SetGameObjectPosition(
+            ref GameObject gameObject,
+            ref GameObjectData gameObjectData
+        )
         {
             float x = float.Parse(gameObjectData.x);
             float y = float.Parse(gameObjectData.y);
@@ -442,7 +558,9 @@ namespace Batchbuild
         {
             GameObject prefab;
             string prefabID = args[0];
-            float pos_x, pos_y, pos_z;
+            float pos_x,
+                pos_y,
+                pos_z;
             Vector3 originalScale;
             bool scaleChanged = false;
 
@@ -472,7 +590,6 @@ namespace Batchbuild
             }
             else
             {
-
                 pos_x = Parse(args[1]);
                 pos_y = Parse(args[2]);
                 pos_z = Parse(args[3]);
@@ -483,7 +600,8 @@ namespace Batchbuild
             pos_z += offset.z;
 
             prefab.transform.position = new Vector3(pos_x, pos_y, pos_z);
-            prefab.transform.rotation = Quaternion.identity; ;
+            prefab.transform.rotation = Quaternion.identity;
+            ;
 
             // Rotation.
             if (args.Length >= 7)
@@ -515,7 +633,8 @@ namespace Batchbuild
                 prefab.transform.RotateAround(
                     new Vector3(point_x, point_y, point_z),
                     new Vector3(axis_x, axis_y, axis_z),
-                    angle);
+                    angle
+                );
             }
 
             // Scale.
@@ -529,9 +648,14 @@ namespace Batchbuild
                 scaleChanged = true;
             }
 
-            Log.LogDebug("Instantiate \"" + prefab.name + "\" " +
-                prefab.transform.position.ToString() + " " +
-                prefab.transform.rotation.ToString());
+            Log.LogDebug(
+                "Instantiate \""
+                    + prefab.name
+                    + "\" "
+                    + prefab.transform.position.ToString()
+                    + " "
+                    + prefab.transform.rotation.ToString()
+            );
             GameObject gameObject = UnityEngine.Object.Instantiate(prefab);
 
             // Restores the original scale.
@@ -543,7 +667,10 @@ namespace Batchbuild
             Piece component = gameObject.GetComponent<Piece>();
             if ((bool)component)
             {
-                component.SetCreator(Player.m_localPlayer.GetPlayerID(), PlatformManager.DistributionPlatform.LocalUser.PlatformUserID);
+                component.SetCreator(
+                    Player.m_localPlayer.GetPlayerID(),
+                    PlatformManager.DistributionPlatform.LocalUser.PlatformUserID
+                );
             }
         }
 
@@ -565,9 +692,20 @@ namespace Batchbuild
         {
             GameObject gameObject = null;
 
-            int layerMask = LayerMask.GetMask("item", "piece", "piece_nonsolid", "Default", "static_solid", "Default_small", "vehicle");
+            int layerMask = LayerMask.GetMask(
+                "item",
+                "piece",
+                "piece_nonsolid",
+                "Default",
+                "static_solid",
+                "Default_small",
+                "vehicle"
+            );
 
-            Ray ray = new Ray(GameCamera.instance.transform.position, GameCamera.instance.transform.forward);
+            Ray ray = new Ray(
+                GameCamera.instance.transform.position,
+                GameCamera.instance.transform.forward
+            );
 
             if (Physics.Raycast(ray, out RaycastHit raycastHit, 500f, layerMask))
             {
